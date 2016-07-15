@@ -14,6 +14,7 @@ def click_ball(event):
     По клику мышкой нужно удалять тот объект, на который мышка указывает.
     А также засчитываеть его в очки пользователя.
     """
+
     global ball_coordinate, ball_number, label, score
     obj = canvas.find_closest(event.x, event.y)
     x1, y1, x2, y2 = canvas.coords(obj)
