@@ -14,16 +14,12 @@ def click_ball(event):
     По клику мышкой нужно удалять тот объект, на который мышка указывает.
     А также засчитываеть его в очки пользователя.
     """
-
-    global ball_coordinate, ball_number, label, score
+    global label, score
     obj = canvas.find_closest(event.x, event.y)
     x1, y1, x2, y2 = canvas.coords(obj)
     number=obj[0]
     if x1 <= event.x <= x2 and y1 <= event.y <= y2:
         canvas.delete(obj)
-        position=ball_number.index(number) # определение индекса элемента списка
-        ball_number.pop(position) # удаление элемента из списка по номеру позиции
-        ball_coordinate.pop(position) # удаляем координаты элемента из списка по номеру позиции
         score+=1
         label['text']=score
         create_random_ball()
@@ -42,21 +38,21 @@ def create_random_ball():
  создаёт шарик в случайном месте игрового холста canvas,
  при этом шарик не выходит за границы холста!
     """
+    global ball_coordinate, ball_number
     R = randint(ball_minimal_radius, ball_maximal_radius)
     x = randint(0, int(canvas['width'])-1-2*R)
     y = randint(0, int(canvas['height'])-1-2*R)
     canvas.create_oval(x, y, x+2*R, y+2*R, width=1, fill=random_color())
      #рисуем шарик и запоминаем его номер в num_oval
-    num_ball = canvas.create_oval(x, y, x+R, y+R, width=0, fill=random_color())
+    num_oval = canvas.create_oval(x, y, x+R, y+R, width=0, fill=random_color())
     ball_coordinate.append([x,y])# запоминаем координаты нового шарика
-    ball_number.append(num_ball)# запоминаем номер нового шарика
+    ball_number.append(num_oval)# запоминаем номер нового шарика
 
 def random_color():
     """
  :return: Случайный цвет из некоторого набора цветов
     """
     return choice(ball_available_colors)
-
 
 def init_ball_catch_game():
     """
@@ -81,7 +77,7 @@ def init_main_window():
 
 
 if __name__ == "__main__":
- init_main_window()
- init_ball_catch_game()
- root.mainloop()
- print("Приходите поиграть ещё!")
+    init_main_window()
+    init_ball_catch_game()
+    root.mainloop()
+    print("Приходите поиграть ещё!")
